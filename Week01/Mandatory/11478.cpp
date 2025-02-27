@@ -23,6 +23,6 @@ int main()
     string s;
 
     cin >> s;
-    cout << getSubs(s) << endl;
+    cout << getSubs(s) << "\n";
     return 0;
 }
