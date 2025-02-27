@@ -4,38 +4,44 @@
 
 using namespace std;
 
-int line(string str)
+bool isBalanced(string str)
 {
     stack<char> stk;
 
-    for (int i = 0; i < str.size(); i++)
+    for (char c : str)
     {
-        if (str[i] == '(')
-            stk.push('(');
-        else if (str[i] == '[')
-            stk.push('[');
-        else if (str[i] == ')')
+        if (c == '(' || c == '[')
+            stk.push(c);
+        else if (c == ')')
         {
-            if (str.empty())
+            if (stk.empty() || stk.top() != '(')
                 return false;
-            else if (str.top() != '(')
+            stk.pop();
+        }
+        else if (c == ']')
+        {
+            if (stk.empty() || stk.top() != '[')
                 return false;
-            else
-                str.pop();
+            stk.pop();
         }
     }
+
+    return stk.empty();
 }
 
 int main()
 {
     string str;
-    while (1)
+    while (true)
     {
         getline(cin, str);
         if (str == ".")
             break;
 
-        line(str);
+        if (isBalanced(str))
+            cout << "yes" << "\n";
+        else
+            cout << "no" << "\n";
     }
 
     return 0;
