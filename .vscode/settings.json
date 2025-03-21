@@ -4,6 +4,8 @@
     "cstdlib": "cpp",
     "vector": "cpp",
     "string": "cpp",
-    "xstring": "cpp"
+    "xstring": "cpp",
+    "queue": "cpp",
+    "stack": "cpp"
   }
 }
