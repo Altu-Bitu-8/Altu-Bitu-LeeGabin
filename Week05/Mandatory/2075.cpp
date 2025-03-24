@@ -4,49 +4,39 @@
 
 using namespace std;
 
-int getNthNumber(const vector<int> &numbers, int n)
-{
-    // min heap 선언
-    priority_queue<int, vector<int>, greater<int>> min_heap;
-
-    // heap 크기 n으로 설정
-    for (int i = 0; i < n; i++)
-    {
-        min_heap.push(numbers[i]);
-    }
-
-    // 나머지 요소 확인하면서 가장 큰 값 n개 유지
-    for (int i = n; i < numbers.size(); i++)
-    {
-        // heap의 최솟값보다 클 경우
-        if (numbers[i] > min_heap.top())
-        {
-            // 최솟값 pop하고 입력된 값으로 바꿈
-            min_heap.pop();
-            min_heap.push(numbers[i]);
-        }
-    }
-    // n번째 큰 값 리턴
-    return min_heap.top();
-}
-
 int main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(0);
 
     // 입력
-    int n;
+    int n, number;
     cin >> n;
 
-    vector<int> numbers(n * n);
+    // min heap 선언 -> 가장 큰 n개만 저장
+    priority_queue<int, vector<int>, greater<int>> min_heap;
+
+    // 필요한 값만 저장하기 위해 입력 + 연산 로직 합침
     for (int i = 0; i < n * n; i++)
     {
-        cin >> numbers[i];
+        cin >> number;
+
+        if (min_heap.size() < n)
+        {
+            // heap 크기가 n보다 작으면 그냥 넣음
+            min_heap.push(number);
+        }
+        else if (number > min_heap.top())
+        {
+            // 최솟값 pop하고 입력된 값으로 바꿈
+            min_heap.pop();
+            min_heap.push(number);
+        }
+        // 아니라면 그냥 무시 (작은 수니까 필요 없음)
     }
 
-    // 연산 & 출력
-    cout << getNthNumber(numbers, n);
+    // n번째 큰 값 출력
+    cout << min_heap.top();
 
     return 0;
 }
