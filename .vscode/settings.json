@@ -6,6 +6,12 @@
     "string": "cpp",
     "xstring": "cpp",
     "queue": "cpp",
-    "stack": "cpp"
+    "stack": "cpp",
+    "deque": "cpp",
+    "xlocinfo": "cpp",
+    "xtree": "cpp",
+    "xutility": "cpp",
+    "initializer_list": "cpp",
+    "type_traits": "cpp"
   }
 }
