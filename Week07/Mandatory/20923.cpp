@@ -1,5 +1,5 @@
 // 테케 통과가 안됩니다~~~
-// 조금 더 고민해보고 추가 제출하겠습니다
+// 조금 더 고민해보고 추가 제출하겠습니다.
 
 #include <iostream>
 #include <deque>
@@ -12,14 +12,14 @@ void hitTheBell(deque<int> &winner_deck, deque<int> &loser_ground, deque<int> &w
     // 상대방의 그라운드 카드 자기 덱 아래에 뒤집어서 추가
     while (!loser_ground.empty())
     {
-        winner_deck.push_back(loser_ground.front());
-        loser_ground.pop_front();
+        winner_deck.push_back(loser_ground.back());
+        loser_ground.pop_back();
     }
     // 자신의 그라운드 카드 자기 덱 아래에 뒤집어서 추가
     while (!winner_ground.empty())
     {
-        winner_deck.push_back(winner_ground.front());
-        winner_ground.pop_front();
+        winner_deck.push_back(winner_ground.back());
+        winner_ground.pop_back();
     }
 }
 
@@ -29,51 +29,43 @@ void hitTheBell(deque<int> &winner_deck, deque<int> &loser_ground, deque<int> &w
 int whoWon(int m, deque<int> &dd_deck, deque<int> &sy_deck)
 {
     deque<int> dd_ground, sy_ground;
+    // true: 도도, false: 수연
+    bool turn = true;
 
     for (int i = 0; i < m; i++)
     {
-
-        // 도도차례
-        if (i % 2 == 0)
+        if (turn)
         {
-            // 도도 패
+            // 도도 차례
             if (dd_deck.empty())
-            {
                 return 1;
-            }
-            dd_ground.push_back(dd_deck.front());
+            dd_ground.push_front(dd_deck.front());
             dd_deck.pop_front();
         }
-        // 수연차례
         else
         {
-            // 수연 패
+            // 수연 차례
             if (sy_deck.empty())
-            {
                 return 0;
-            }
-            sy_ground.push_back(sy_deck.front());
+            sy_ground.push_front(sy_deck.front());
             sy_deck.pop_front();
         }
 
-        // 어느 쪽의 그라운드도 비어있으면 안된다
-        if (!dd_ground.empty() && !sy_ground.empty())
+        // 종 칠 수 있는지 확인
+        if (!dd_ground.empty() && dd_ground.front() == 5)
         {
-            // 도도가 종치는 경우
-            if (dd_ground.back() == 5 || sy_ground.back() == 5)
-            {
-                hitTheBell(dd_deck, sy_ground, dd_ground);
-                i--;
-                continue;
-            }
-            // 수연이가 종치는 경우
-            else if (dd_ground.back() + sy_ground.front() == 5)
-            {
-                hitTheBell(sy_deck, dd_ground, sy_ground);
-                i--;
-                continue;
-            }
+            hitTheBell(dd_deck, sy_ground, dd_ground);
         }
+        else if (!sy_ground.empty() && sy_ground.front() == 5)
+        {
+            hitTheBell(dd_deck, sy_ground, dd_ground);
+        }
+        else if (!dd_ground.empty() && !sy_ground.empty() && dd_ground.front() + sy_ground.front() == 5)
+        {
+            hitTheBell(sy_deck, dd_ground, sy_ground);
+        }
+
+        turn = !turn;
     }
 
     // 도도 승
@@ -103,8 +95,8 @@ int main()
     {
         int dodo, suyeon;
         cin >> dodo >> suyeon;
-        dd_deck.push_back(dodo);
-        sy_deck.push_back(suyeon);
+        dd_deck.push_front(dodo);
+        sy_deck.push_front(suyeon);
     }
 
     // 연산
