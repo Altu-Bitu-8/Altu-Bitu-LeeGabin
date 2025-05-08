@@ -5,6 +5,8 @@
     "vector": "cpp",
     "string": "cpp",
     "xstring": "cpp",
-    "xiosbase": "cpp"
+    "xiosbase": "cpp",
+    "algorithm": "cpp",
+    "iosfwd": "cpp"
   }
 }
